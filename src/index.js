@@ -1,12 +1,36 @@
+/*
+ * @Author: chentao 
+ * @Date: 2019-07-23 14:43:50 
+ * @Last Modified by: chentao
+ * @Last Modified time: 2019-07-25 10:48:25
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import dva from 'dva';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import RouterConfig from '../src/config/routerConfig'
+import home from '../src/model/home'
+import login from '../src/model/login'
+//import {BrowserRouter} from  'react-router'
+const createHistory=require("history").createBrowserHistory ;
+// ReactDOM.render(<RouterConfig />, document.getElementById('root'));
+// 1. Initialize
+const app = dva({
+    history: createHistory(),
+});
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// 2. Plugins
+//app.use({});
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// 3. Model
+app.model(home);
+app.model(login);
+//require('../src/config/routerConfig').default
+// 4. Router
+app.router(RouterConfig);
+
+// 5. Start
+app.start('#root');
+
+
+
