@@ -1,7 +1,6 @@
 import qs from 'qs'
 import config from '../config/serviceConfig'
 function checkStatus(response) {
-    console.log("TCL: checkStatus -> response", response)
     if (response.status >= 200 && response.status < 300) {
         return response;
     }

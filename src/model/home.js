@@ -2,7 +2,7 @@
  * @Author: chentao 
  * @Date: 2019-07-23 14:41:24 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-07-25 15:44:03
+ * @Last Modified time: 2019-08-06 14:10:50
  */
 import { delay, loadImg } from '../util'
 import request from '../util/request';
@@ -22,8 +22,11 @@ export default {
                 { "title": "体育", "type": "sports", "categoryId": 0 },
                 { "title": "视讯", "type": "game", "categoryId": 4 }
             ],
-                
-            "errorcode": 200, "message": "操作成功"
+
+            "errorcode": 200, "message": "操作成功",
+            moment: null,
+            paused: true,
+            reverse: false,
         }
     },
     //同步更新

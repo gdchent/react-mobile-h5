@@ -1,0 +1,100 @@
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: scroll;
+
+    .header {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        flex-direction: row !important;
+        align-items: center;
+        background-color: #cc0000;
+        color: #ffffff;
+        padding: 0.5rem;
+        margin: 0rem !important;
+
+        .headerNoLoginText {
+            color: #ffffff;
+            text-decoration: none;
+            /*  去掉a标签的下划线*/
+        }
+        
+        .box {
+            display: flex;
+            flex: 1;
+            height: 300px;
+            background-color: red;
+            position: relative;
+            overflow: scroll;
+
+            .child-1 {
+                position: absolute;
+                top: 0;
+                height: 100px;
+                width: 100%;
+                background-color: green;
+                z-index: 999;
+            }
+
+            .scroll {
+                height: 100%;
+                overflow: scroll;
+                padding-top: 200px;
+
+                .child-2 {
+                    height: 400px;
+                    background-color: deepskyblue;
+                }
+            }
+        }
+
+    }
+
+    .content {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        padding: 0rem !important;
+
+        .bannerItem {
+            width: '100vw';
+            height: 80px;
+        }
+        .wrap {
+            margin: 0 10% 0auto;
+            background: #ddd;
+            font-size: 0;
+            /* 固宽，溢出隐藏 */
+            width: 300px;
+            height: 40px;
+            overflow: hidden;
+            white-space: nowrap;
+
+            /* 相对定位 */
+
+            position: relative;
+
+            .cont {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                /* 关键 */
+                width: 200%;
+                transition: left 10s linear;
+            }
+
+            .txt {
+                display: inline-block;
+                font-size: 18px;
+                line-height: 30px;
+                margin-top: 5px;
+                color: #333;
+               
+
+            }
+        }
+    }
+}

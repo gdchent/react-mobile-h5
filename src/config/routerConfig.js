@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'
-//import { Router, Route,Switch } from 'dva/router';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import App from '../App'
 import TabMainPage from '../page/tab'
 import Home from '../page/home'
@@ -9,46 +8,20 @@ import BuyLottery from '../page/buylottery'
 import LotteryMenu from '../page/lotterymenu'
 import User from '../page/user'
 import Login from '../page/login'
+import Register from '../page/register'
+import Test from '../page/test'
 
-
-// class AppRouter extends React.PureComponent {
-
-//     render() {
-//         return (
-//             <Router>
-//                 <Switch>
-//                     <Route path='/' children={(props) => (
-//                         <App>
-//                             <Switch>
-//                                 <TabMainPage path={'/'}>
-//                                     <Switch>
-//                                         <Route exact path='/home' component={Home} />
-//                                         <Route path='/lottery' component={Lottery} />
-//                                         <Route path='/buylottery' component={BuyLottery} />
-//                                         <Route path='/lotterymenu' component={LotteryMenu} />
-//                                         <Route path='/user' component={User} />
-//                                     </Switch>
-//                                 </TabMainPage>
-//                                 <Route path='/login' component={Login} />
-
-//                             </Switch>
-//                         </App>
-//                     )}>
-//                     </Route>
-//                 </Switch>
-//             </Router>
-//         )
-//     }
-// }
-function AppRouter() {
+function AppRouter(routerObj) {
+    const { history } = routerObj
     return (
-        <Router  >
+        <Router history={history} basename={'/'}>
             <Switch>
-
                 <Route path='/' children={(props) => (
                     <App>
                         <Switch>
-                            <Route path='/login' component={Login} />
+                            <Route path="/test" component={Test} />
+                            <Route path="/register" component={Register} />
+                            <Route path='/login' component={Login} />    {/* 这个放再TabMainPage里面会有问题 */}
                             <TabMainPage >
                                 <Switch>
                                     <Route exact path='/home' component={Home} />
@@ -59,6 +32,7 @@ function AppRouter() {
                                     <Redirect from={'/'} to={'/home'} />
                                 </Switch>
                             </TabMainPage>
+
                         </Switch>
                     </App>
                 )}>
@@ -67,5 +41,4 @@ function AppRouter() {
         </Router>
     )
 }
-
 export default AppRouter 

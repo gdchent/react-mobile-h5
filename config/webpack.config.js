@@ -373,8 +373,10 @@ module.exports = function (webpackEnv) {
                 babelrc: false,
                 configFile: false,
                 compact: false,
+                //https://github.com/ant-design/babel-plugin-import
                 plugins: [
-                  ["import", { "libraryName": "antd-mobile", "style": "css" }] // `style: true` for less
+                  ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"],
+                  ["import", { "libraryName": "antd-mobile", "libraryDirectory": "lib"}, "antd-mobile"]
                 ],
                 presets: [
                   [
@@ -431,7 +433,7 @@ module.exports = function (webpackEnv) {
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
               },
-              'less-loader'
+                'less-loader'
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -449,7 +451,7 @@ module.exports = function (webpackEnv) {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'less-loader'
+                'less-loader'
               ),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
