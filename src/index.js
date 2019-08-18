@@ -2,10 +2,10 @@
  * @Author: chentao 
  * @Date: 2019-07-23 14:43:50 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-08-06 16:22:01
+ * @Last Modified time: 2019-08-18 17:52:29
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import dva from 'dva';
 import './index.css';
 import RouterConfig from '../src/config/routerConfig'

@@ -2,13 +2,14 @@
  * @Author: chentao 
  * @Date: 2019-07-23 09:57:04 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-08-06 16:11:57
+ * @Last Modified time: 2019-08-18 18:15:59
  */
 import React from 'react'
 import { Carousel } from 'antd-mobile'
 import { connect } from 'dva'
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import components from './components'
 import TweenOne from 'rc-tween-one';
 import './index.less'
 import 'antd-mobile/dist/antd-mobile.css';
@@ -16,8 +17,9 @@ import 'antd-mobile/dist/antd-mobile.css';
 //import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 //import "react-tabs/style/react-tabs.css";
 
-class Home extends React.PureComponent {
+const { GridViewComponent }=components
 
+class Home extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -28,7 +30,17 @@ class Home extends React.PureComponent {
         this.checkScrollLeft()  //开启水平方向跑马灯
         this.marquee()   //开启垂直方向跑马灯
         this.props.dispatch({
+            type:'home/getBanner',
+            payload:{}
+        })
+        //获取所有的tab的数据
+        this.props.dispatch({
             type: 'home/getIndexTab',
+            payload: {}
+        })
+        //获取热门彩种数据
+        this.props.dispatch({
+            type: 'home/getHomeHotMenu',
             payload: {}
         })
     }
@@ -71,7 +83,10 @@ class Home extends React.PureComponent {
 
     }
     render() {
-        const { tabObj } = this.props
+        const {
+            banner, //获取banner数据
+            tabObj
+        } = this.props
         return (
             <div className={'container'}>
                 <div className={'header'}>
@@ -80,21 +95,30 @@ class Home extends React.PureComponent {
                     <Link className={'headerNoLoginText'} to='/register'>注册</Link>
                 </div>
                 <div className={'content'}>
-                    <Carousel
-                        afterChange={this.onChange}
-                        autoplay={true}
-                        dots={true} //是否显示面板指示点
-                        mode={'banner'}
-                        infinite={true} //是否循环播放
-                        frameOverflow="visible"
-                        cellSpacing={10}
-                        slideWidth={1.0}
-                    >
-                        <img src={'https://cpweb-new.dgstaticresources.net/cp99/uploads/20190604/4928bd629e73d06941b5c963b23c82fc.png'} className={'bannerItem'} />
-                        <img src={'https://cpweb-new.dgstaticresources.net/uploads/20180823/3e8920c0ad5b7a13f3f88c8adbfdb16f.jpg'} className={'bannerItem'} />
-                        <img src={'https://cpweb-new.dgstaticresources.net/cp99/uploads/20190605/46cb58f6c4b7039404f3616083714f9f.png'} className={'bannerItem'} />
-                        <img src={'http://img1.imgtn.bdimg.com/it/u=2109601015,3618472228&fm=26&gp=0.jpg'} className={'bannerItem'} />
-                    </Carousel>
+
+                    {
+                        !!banner && !!banner.data && (
+                            <Carousel
+                                afterChange={this.onChange}
+                                autoplay={true}
+                                dots={true} //是否显示面板指示点
+                                mode={'banner'}
+                                infinite={true} //是否循环播放
+                                frameOverflow="visible"
+                                cellSpacing={10}
+                                slideWidth={1.0}
+                            >
+                                {
+                                    !!banner && !!banner.data && banner.data.map((item, index) => {
+                                        return (
+                                            <img src={item.icon} key={'index'} className={'bannerItem'} />
+                                        )
+                                    })
+                                }
+                            </Carousel>
+                        )
+                    }
+
                     {/* 水平滚动 */}
                     <div className={"wrap"} ref={'wrap'}>
                         <div className={"cont"} ref={'cont'}>
@@ -107,6 +131,7 @@ class Home extends React.PureComponent {
                         animated={false}
                         useOnPan={false}
                         tabDirection={'horizontal'}
+                        className={'tabs'}
                     >
                         {
                             this.renderContent()
@@ -116,27 +141,6 @@ class Home extends React.PureComponent {
                     {
                         this.renderVerticalLooper()
                     }
-                    <div style={{ flex: 1 }}>
-                        <TweenOne
-                            animation={this.animation}
-                            paused={this.props.paused}
-                            reverse={this.props.reverse}
-                            moment={this.props.moment}
-                            className="code-box-shape"
-                            style={{ margin: '40px 20px' }}
-                        />
-
-                        <div style={{
-                            position: 'absolute',
-                            width: 300,
-                            left: '50%',
-                            marginLeft: -150,
-                            bottom: 25
-                        }}
-                        >
-                            <div type="primary" onClick={this.onRestart}>restart</div>
-                        </div>
-                    </div>
 
                     {/* <div className="box">
                         <div className="child-1"></div>
@@ -209,31 +213,27 @@ class Home extends React.PureComponent {
 
     }
     renderContent = () => {
+        const {selectIndex,homeHotMenu}=this.props
         return (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '250px',
-                backgroundColor: '#fff'
-            }}>
-                Content of first tab
+            <div className={'renderTabContent'}>
+               <GridViewComponent homeHotMenu={homeHotMenu}
+                colum={3}
+               />
             </div>
         )
     }
-    
+
     //轮播图改变事件
     onChange = (e) => {
-      
+
     }
 }
 const connectRes = connect(({ login, home }) => {
     console.log('homeState', home)
     return {
         tabObj: home.tabObj,
-        moment: home.moment,
-        paused: home.paused,
-        reverse: home.reverse,
+        banner: home.banner,
+        homeHotMenu: home.homeHotMenu
     }
 })(Home)
 export default connectRes

@@ -2,32 +2,22 @@
  * @Author: chentao 
  * @Date: 2019-07-23 14:41:24 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-08-06 14:10:50
+ * @Last Modified time: 2019-08-18 18:18:52
  */
 import { delay, loadImg } from '../util'
 import request from '../util/request';
 import config from '../config/serviceConfig'
+import banner from '../data/banner'
+import homeHotMenu from '../data/homeHotMenu' //获取tab对应的一个tab菜单的数据
+import getIndexTab from '../data/getIndexTab'  //获取首页中间区域选项卡的数据
 export default {
     namespace: 'home',
     state: {
-        tabObj: {
-            "data": [
-                { "title": "热门", "type": "hot", "categoryId": 0 },
-                { "title": "彩票", "type": "digital", "categoryId": 0 },
-                { "title": "棋牌", "type": "game", "categoryId": 2 },
-                { "title": "捕鱼", "type": "game", "categoryId": 1 },
-                { "title": "电子", "type": "game", "categoryId": 3 },
-                { "title": "体育", "type": "sports", "categoryId": 0 },
-                { "title": "视讯", "type": "game", "categoryId": 4 },
-                { "title": "体育", "type": "sports", "categoryId": 0 },
-                { "title": "视讯", "type": "game", "categoryId": 4 }
-            ],
-
-            "errorcode": 200, "message": "操作成功",
-            moment: null,
-            paused: true,
-            reverse: false,
-        }
+        tabObj: {}, //tab选项卡的数据
+        homeHotMenu:{}, //热门彩种信息
+        banner:{},//彩种信息
+        selectIndex:0, //默认选中的中间区域的tab为0
+        
     },
     //同步更新
     reducers: {
@@ -38,22 +28,38 @@ export default {
         },
     },
     effects: {
-
+    
+        //获取素有的tab的数据
         *getIndexTab(action, effect) {
             const { call, select, put } = effect
-            // const res = yield call(request,{
-            //         url: '/api_fusion/Lottery/getIndexTab', method: 'POST', data: {
-            //             timestamp: '1563867347541',
-            //             nonce: "1563867347541-11b65997",
-            //         }
-            //     })
-            // console.log('res', res)
-            // yield put({
-            //     type: 'updateState',
-            //     payload: {
-            //         tabObj: res
-            //     }
-            // })
+            //同步更新state的数据
+            yield put({
+                type:'updateState',
+                payload:{
+                    tabObj:getIndexTab
+                }
+            })
+        },
+         //获取热门菜单数据
+        *getHomeHotMenu(action,effect){
+            const {put }=effect
+            yield put({
+                type:'updateState',
+                payload:{
+                    homeHotMenu:homeHotMenu,
+                }
+            })
+        },
+        //获取轮播图
+        *getBanner(action,effect){
+            const {put }=effect
+            yield put({
+                 type:'updateState',
+                 payload:{
+                     banner:banner
+                 }
+            })
         }
+
     }
 }
