@@ -2,21 +2,18 @@
  * @Author: chentao 
  * @Date: 2019-07-23 09:57:04 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-08-18 18:15:59
+ * @Last Modified time: 2019-08-21 23:22:50
  */
 import React from 'react'
 import { Carousel } from 'antd-mobile'
 import { connect } from 'dva'
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
-import components from './components'
-import TweenOne from 'rc-tween-one';
+
 import './index.less'
 import 'antd-mobile/dist/antd-mobile.css';
 
-//import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-//import "react-tabs/style/react-tabs.css";
-
+import components from './components'
 const { GridViewComponent }=components
 
 class Home extends React.PureComponent {
@@ -141,14 +138,6 @@ class Home extends React.PureComponent {
                     {
                         this.renderVerticalLooper()
                     }
-
-                    {/* <div className="box">
-                        <div className="child-1"></div>
-                        <div className="scroll">
-                            <div className="child-2"></div>
-                        </div>
-
-                    </div> */}
 
                 </div>
             </div>
