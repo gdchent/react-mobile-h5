@@ -22,7 +22,9 @@ class GridViewComponent extends React.PureComponent {
                 {
                     !!data&&data.length>0&&data.map((item,index)=>{
                         return (
-                            <li style={{listStyle:'none',
+                            <li 
+                                key={'index'+index}
+                                style={{listStyle:'none',
                                 width:(100/colum)+'%',
                                 justifyContent:'center',
                                 alignItems:'center',

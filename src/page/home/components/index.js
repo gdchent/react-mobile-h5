@@ -1,5 +1,6 @@
 import GridViewComponent from "./GridViewComponent";
-
-export default {
-    GridViewComponent:GridViewComponent 
+import Marquee from './Marquee'
+export  {
+    GridViewComponent ,
+    Marquee
 }

@@ -2,7 +2,7 @@
  * @Author: chentao 
  * @Date: 2019-07-23 09:57:04 
  * @Last Modified by: chentao
- * @Last Modified time: 2019-08-21 23:22:50
+ * @Last Modified time: 2019-08-23 18:59:29
  */
 import React from 'react'
 import { Carousel } from 'antd-mobile'
@@ -13,8 +13,8 @@ import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
 import './index.less'
 import 'antd-mobile/dist/antd-mobile.css';
 
-import components from './components'
-const { GridViewComponent }=components
+import { GridViewComponent,Marquee } from './components'
+
 
 class Home extends React.PureComponent {
 
@@ -91,6 +91,7 @@ class Home extends React.PureComponent {
                     <div className={'headerNoLoginText'}>久久彩票</div>
                     <Link className={'headerNoLoginText'} to='/register'>注册</Link>
                 </div>
+                <Marquee text="this is a very very very very very very very very very very very very very very very very long text" />
                 <div className={'content'}>
 
                     {
@@ -204,7 +205,7 @@ class Home extends React.PureComponent {
     renderContent = () => {
         const {selectIndex,homeHotMenu}=this.props
         return (
-            <div className={'renderTabContent'}>
+            <div  className={'renderTabContent'}>
                <GridViewComponent homeHotMenu={homeHotMenu}
                 colum={3}
                />
