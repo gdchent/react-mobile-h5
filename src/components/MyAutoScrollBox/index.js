@@ -27,32 +27,52 @@ export default class MyAutoScrollBox extends React.Component {
     }
 
     componentDidMount() {
+        const DefaultBox=document.getElementsByClassName('defaultBox')[0];
+        const ScrollBox=document.getElementsByClassName('scrollBox')[0];
+        if (DefaultBox){
+            console.log(12222)
+            DefaultBox.addEventListener('touchstart',()=>{this.stopScroll()});
+            DefaultBox.addEventListener('touchend',()=>{this.beginScroll(DefaultBox,ScrollBox)});
+
+            DefaultBox.addEventListener('mouseenter',()=>{this.stopScroll()});
+            DefaultBox.addEventListener('mouseleave',()=>{this.beginScroll(DefaultBox,ScrollBox)});
+        }
         this.AutoScroll()
     }
 
+    //开启定时器滚动
+    beginScroll=(DefaultBox,ScrollBox)=>{
+            this.t=setInterval(()=>{
+                if (this.canScroll(DefaultBox,ScrollBox)){
+                    ScrollBox.style.top=parseInt( ScrollBox.style.top)-Math.ceil(this.props.speed>0?this.props.speed:this.props.speed*-1)+'px';
+                }else {
+                    clearInterval(this.t)
+                }
+            },20)
+        }
+
+
+    //结束滚动
+    stopScroll=()=>{
+        if (this.t){
+            clearInterval(this.t)
+        }
+    }
 
     AutoScroll=()=>{
         const ScrollBox=document.getElementsByClassName('scrollBox')[0];
         const DefaultBox=document.getElementsByClassName('defaultBox')[0];
         if (ScrollBox&&DefaultBox) {
-            if (this.t){
-                clearInterval(this.t)
-            }
-            this.t=setInterval(()=>{
-                if (this.canScroll(DefaultBox,ScrollBox)){
-                    ScrollBox.style.top=parseInt( ScrollBox.style.top)-this.props.speed+'px';
-                }else {
-                    clearInterval(this.t)
-                }
-            },100)
+            this.stopScroll();
+            this.beginScroll(DefaultBox,ScrollBox)
         }
     };
 
 
     render() {
         return (
-            <div className={'defaultBox'} style={{height:this.props.height}}>
-                <div className={'scrollBox'}>
+            <div className={'defaultBox'}  style={{height:this.props.height,width:this.props.width}}>
+                <div className={'scrollBox'} >
                     {this.props.children}
                 </div>
             </div>
