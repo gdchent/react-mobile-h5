@@ -71,7 +71,7 @@ export default class MyAutoScrollBox extends React.Component {
 
     render() {
         return (
-            <div className={'defaultBox'}  style={{height:this.props.height,width:this.props.width}}>
+            <div  className={'defaultBox'}  style={{height:this.props.height,width:this.props.width}}>
                 <div className={'scrollBox'} >
                     {this.props.children}
                 </div>

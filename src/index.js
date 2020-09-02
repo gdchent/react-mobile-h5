@@ -1,12 +1,13 @@
 /*
  * @Author: chentao 
  * @Date: 2019-07-23 14:43:50 
- * @Last Modified by: chentao
- * @Last Modified time: 2019-08-18 17:52:29
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-08-24 14:04:16
  */
 import React from 'react';
-//import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 import dva from 'dva';
+import 'antd-mobile/dist/antd-mobile.css';
 import './index.css';
 import RouterConfig from '../src/config/routerConfig'
 import home from '../src/model/home'
@@ -33,7 +34,6 @@ app.model(buylottery)
 //require('../src/config/routerConfig').default
 // 4. Router
 app.router((router)=> {
-    // console.log('router',router)
     const {app,history}=router
     return (
         <RouterConfig app={app} history={history}/>

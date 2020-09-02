@@ -1,8 +1,8 @@
 /*
  * @Author: chentao 
  * @Date: 2019-07-23 10:07:10 
- * @Last Modified by: chentao
- * @Last Modified time: 2019-08-01 09:45:51
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-08-24 14:10:20
  */
 import React from 'react'
 import './index.css'
@@ -19,8 +19,6 @@ class Login extends React.Component {
         this.props.dispatch({
             type: 'login/captcha',
             payload: {
-                // timestamp:'1564025732382',
-                // nonce:'1564025732382-04bffad0'
             }
         })
         this.props.dispatch({
@@ -124,5 +122,7 @@ const connectRes = connect((state) => {
         userName: login.userName,
         password: login.password
     }
+}, (dispatch) => {
+
 })(Login)
 export default connectRes

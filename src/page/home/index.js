@@ -1,19 +1,16 @@
 /*
  * @Author: chentao 
  * @Date: 2019-07-23 09:57:04 
- * @Last Modified by: chentao
- * @Last Modified time: 2019-08-23 18:59:29
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-08-24 14:23:46
  */
 import React from 'react'
 import { Carousel } from 'antd-mobile'
 import { connect } from 'dva'
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
-
 import './index.less'
-import 'antd-mobile/dist/antd-mobile.css';
-
-import { GridViewComponent,Marquee } from './components'
+import { GridViewComponent, Marquee } from './components'
 
 
 class Home extends React.PureComponent {
@@ -26,20 +23,7 @@ class Home extends React.PureComponent {
     componentDidMount() {
         this.checkScrollLeft()  //开启水平方向跑马灯
         this.marquee()   //开启垂直方向跑马灯
-        this.props.dispatch({
-            type:'home/getBanner',
-            payload:{}
-        })
-        //获取所有的tab的数据
-        this.props.dispatch({
-            type: 'home/getIndexTab',
-            payload: {}
-        })
-        //获取热门彩种数据
-        this.props.dispatch({
-            type: 'home/getHomeHotMenu',
-            payload: {}
-        })
+
     }
 
     //https://www.php.cn/js-tutorial-412818.html
@@ -50,15 +34,15 @@ class Home extends React.PureComponent {
         const wrap = this.refs.wrap
         const cont = this.refs.cont
         const text = this.refs.text
-        //获取offsetWidth
+        //获取offsetWidth =padding+border+width
         let wrapWidth = wrap.offsetWidth
         let textWidth = text.offsetWidth
         //判断 如果文本的宽度比容器要宽就滚动
         if (textWidth > wrapWidth) {
             //设置
             //var str = this.refs.style.height + ""
-            text.style.paddingRight = '380px'
-            cont.style.left = '-870px'
+           // text.style.paddingRight = '380px'
+           // cont.style.left = '-870px'
             //var res = str.substring(0, str.length - 2)
         }
     }
@@ -93,7 +77,6 @@ class Home extends React.PureComponent {
                 </div>
                 <Marquee text="this is a very very very very very very very very very very very very very very very very long text" />
                 <div className={'content'}>
-
                     {
                         !!banner && !!banner.data && (
                             <Carousel
@@ -120,8 +103,8 @@ class Home extends React.PureComponent {
                     {/* 水平滚动 */}
                     <div className={"wrap"} ref={'wrap'}>
                         <div className={"cont"} ref={'cont'}>
-                            <p className={"txt"} ref={'text'}>1.文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。</p>
-                            <p className={"txt"} ref={'text'}>1.文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。</p>
+                            <p className={"txt"} ref={'text'}>英雄联盟</p>
+                            <p className={"txt"} ref={'text'}>1.文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动2。</p>
                         </div>
                     </div>
                     <Tabs tabs={tabObj.data}
@@ -177,7 +160,7 @@ class Home extends React.PureComponent {
     }
 
     containerScrollView = (e) => {
-        console.log('bbb', e)
+
     }
     //内容样式
     contentStyle = () => {
@@ -203,12 +186,12 @@ class Home extends React.PureComponent {
 
     }
     renderContent = () => {
-        const {selectIndex,homeHotMenu}=this.props
+        const { selectIndex, homeHotMenu } = this.props
         return (
-            <div  className={'renderTabContent'}>
-               <GridViewComponent homeHotMenu={homeHotMenu}
-                colum={3}
-               />
+            <div className={'renderTabContent'}>
+                <GridViewComponent homeHotMenu={homeHotMenu}
+                    colum={3}
+                />
             </div>
         )
     }
@@ -219,11 +202,25 @@ class Home extends React.PureComponent {
     }
 }
 const connectRes = connect(({ login, home }) => {
-    console.log('homeState', home)
     return {
         tabObj: home.tabObj,
         banner: home.banner,
         homeHotMenu: home.homeHotMenu
+    }
+}, (dispatch) => {
+    return {
+        getBanner: dispatch({
+            type: 'home/getBanner',
+            payload: {}
+        }),
+        getIndexTab: dispatch({
+            type: 'home/getIndexTab',
+            payload: {}
+        }),
+        getHomeHotMenu:dispatch({
+            type: 'home/getHomeHotMenu',
+            payload: {}
+        })
     }
 })(Home)
 export default connectRes
